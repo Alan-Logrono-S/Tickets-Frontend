@@ -1,4 +1,4 @@
-const API_URL = "'http://localhost:4000/api";
+const API_URL = "http://localhost:4000/api";
 
 let globalClientes=[], globalTecnicos=[], globalTickets=[];
 
@@ -30,12 +30,12 @@ async function listarClientes() {
             <td>${cli.email}</td>
             <td>${cli.direccion}</td>
             <td>${cli.telefono}</td>
-            <td>${cli.fecha_nacimiento ? cli.fecha_nacimiento.split('') [0]: 'S/F'}</td>
+            <td>${cli.fecha_nacimiento ? cli.fecha_nacimiento.split('T') [0]: 'S/F'}</td>
             <td>${cli.dependencia}</td>
 
             <td>
-                <button id="btn-edit" onClick="agregarClientes('${cli._id}')">Editar</button>
-                <button id="btn-delete" onClick="eliminar('clientes','${cli._id}')">Eliminar</button>
+                <button class="btn-edit" onClick="agregarClientes('${cli._id}')">Editar</button>
+                <button class="btn-delete" onClick="eliminar('clientes','${cli._id}')">Eliminar</button>
             </td>
         </tr>`
     ).join('');
@@ -101,7 +101,7 @@ async function listarTecnicos() {
             <td>${tec.nombre}</td>
             <td>${tec.apellido}</td>
             <td>${tec.cedula}</td>
-            <td>${tec.fecha_nacimiento ? tec.fecha_nacimiento.split('') [0]: 'S/F'}</td>
+            <td>${tec.fecha_nacimiento ? tec.fecha_nacimiento.split('T') [0]: 'S/F'}</td>
             <td>${tec.genero}</td>
             <td>${tec.ciudad}</td>
             <td>${tec.direccion}</td>
@@ -109,8 +109,8 @@ async function listarTecnicos() {
             <td>${tec.email}</td>
 
             <td>
-                <button id="btn-edit" onClick="agregarTecnicos('${tec._id}')">Editar</button>
-                <button id="btn-delete" onClick="eliminar('tecnicos','${tec._id}')">Eliminar</button>
+                <button class="btn-edit" onClick="agregarTecnicos('${tec._id}')">Editar</button>
+                <button class="btn-delete" onClick="eliminar('tecnicos','${tec._id}')">Eliminar</button>
             </td>
         </tr>`
     ).join('');
@@ -173,8 +173,8 @@ async function listarTickets() {
 
     document.getElementById('tabla-tickets').innerHTML = globalTickets.map(tic =>{
 
-        const tec = typeof tic.id_tecnico === 'object' ? tic.id_tecnico : globalTecnicos.find(t=> tec._id === tic.id_tecnico);
-        const cli = typeof tic.id_cliente === 'object' ? tic.id_cliente : globalClientes.find(c=> cli._id === tic.id_cliente);
+        const tec = typeof tic.id_tecnico === 'object' ? tic.id_tecnico : globalTecnicos.find(t=> t._id === tic.id_tecnico);
+        const cli = typeof tic.id_cliente === 'object' ? tic.id_cliente : globalClientes.find(c=> c._id === tic.id_cliente);
         return `
         <tr>
             
@@ -185,8 +185,8 @@ async function listarTickets() {
             
 
             <td>
-                <button id="btn-edit" onClick="agregarTickets('${tic._id}')">Editar</button>
-                <button id="btn-delete" onClick="eliminar('tickets','${tic._id}')">Eliminar</button>
+                <button class="btn-edit" onClick="agregarTickets('${tic._id}')">Editar</button>
+                <button class="btn-delete" onClick="eliminar('tickets','${tic._id}')">Eliminar</button>
             </td>
         </tr>`
     }).join('');
@@ -218,7 +218,7 @@ document.getElementById('form-tickets').addEventListener('submit', async (e)=>{
 });
 
 function agregarTickets(id){
-    const ti = globalClientes.find(x => x._id === id);
+    const ti = globalTickets.find(x => x._id === id);
     if(!ti) return
     document.getElementById('tic._id').value = ti._id;
     document.getElementById('tic-codigo').value = ti.codigo;

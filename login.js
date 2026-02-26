@@ -3,7 +3,7 @@ const errorDiv =  document.querySelector('#mensajeError');
 document.querySelector('#form-login').addEventListener('submit', async (e)=>{
     e.preventDefault();
     try{
-        res = await fetch('http://localhost:4000/api/login/usuarios',{
+        const res = await fetch('http://localhost:4000/api/usuarios/login',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
